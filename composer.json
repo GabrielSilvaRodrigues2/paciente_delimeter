@@ -1,0 +1,15 @@
+{
+    "name": "codespace/paciente_delimeter",
+    "autoload": {
+        "psr-4": {
+            "Codespace\\PacienteDelimeter\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "GabrielSilvaRodrigues2",
+            "email": "gabrielsilvagithub2@gmail.com"
+        }
+    ],
+    "require": {}
+}
