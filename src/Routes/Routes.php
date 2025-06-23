@@ -2,39 +2,39 @@
 
 namespace src\Routes;
 
-Class Routes {
-
+class Routes {
     private $routes = [];
-
-    public function add($method, $path, $action)
-    {
+    
+    // Adiciona uma rota ao array de rotas
+    public function add(string $method, string $path, callable $handler) {
         $this->routes[] = [
             'method' => strtoupper($method),
             'path' => $path,
-            'action' => $action
+            'handler' => $handler
         ];
     }
 
-    public function handleRequest()
-    {
-        $method = $_SERVER['REQUEST_METHOD'];
-        $fullpath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-        $basePath = "/public";
-        $path = substr($fullpath, strlen($basePath));
-
-        if ($path === false || $path === '') {
-            $path = '/';
-        }
-
-        foreach ($this->routes as $r) {
-            $routePath = preg_replace('/\{[^\}]+\}/', '([^/]+)', $r['path']);
-            $routePath = str_replace('/', '\/', $routePath);
-            if ($r['method'] == $method && preg_match('/^' . $routePath . '$/', $path, $matches)) {
-                array_shift($matches);
-                call_user_func_array($r['action'], $matches);
-                return;
+    // Busca uma rota pelo método e caminho
+    public function match(string $method, string $path) {
+        foreach ($this->routes as $route) {
+            if ($route['method'] === strtoupper($method) && $route['path'] === $path) {
+                return $route['handler'];
             }
+        }
+        return null;
+    }
+
+    // Retorna todas as rotas registradas
+    public function getRoutes(): array {
+        return $this->routes;
+    }
+    public function dispatch($method, $path) {
+        $handler = $this->match($method, $path);
+        if ($handler) {
+            call_user_func($handler);
+        } else {
+            http_response_code(404);
+            echo "Rota não encontrada!";
         }
     }
 }

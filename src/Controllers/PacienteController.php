@@ -2,14 +2,12 @@
 namespace src\Controllers;
 
 use src\Services\PacienteService;
-use src\Models\Repository\PacienteRepository;
 
 class PacienteController {
     private $service;
 
-    public function __construct() {
-        $repository = new PacienteRepository();
-        $this->service = new PacienteService($repository);
+    public function __construct(PacienteService $service) {
+        $this->service = $service;
     }
 
     public function criar() {
@@ -19,9 +17,8 @@ class PacienteController {
         );
     }
 
-    public function mostrarFormulario() {
-        echo "foi";
-        include_once __DIR__ . '/view/paciente/form.php';
+    public function mostrarFormulario(){
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/view/paciente/form.php';
     }
 }
 ?>
