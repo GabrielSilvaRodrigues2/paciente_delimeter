@@ -3,15 +3,15 @@ namespace src\Services;
 use src\Models\Repository\PacienteRepository;
 use src\Models\Entity\Paciente;
 
-class PacienteService{
-    private $paciente;
+class PacienteService {
+    private $pacienteRepository;
 
-    public function __construct($paciente){
-        $this->paciente = new PacienteRepository($paciente);
+    public function __construct(PacienteRepository $pacienteRepository) {
+        $this->pacienteRepository = $pacienteRepository;
     }
-    public function criar(Paciente $paciente){
-        $paciente = new Paciente($cpf, $nis);
-        $this->paciente->save($paciente);
+
+    public function criar(Paciente $paciente) {
+        $this->pacienteRepository->save($paciente);
     }
 }
 ?>

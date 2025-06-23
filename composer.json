@@ -2,7 +2,7 @@
     "name": "codespace/paciente_delimeter",
     "autoload": {
         "psr-4": {
-            "Codespace\\PacienteDelimeter\\": "src/"
+            "src\\": "src/"
         }
     },
     "authors": [
